@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<!--
+	Monochromed by TEMPLATED
+    templated.co @templatedco
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>About - Perfect Burger</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-panels.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+	</head>
+	<body>
+
+	<!-- Header -->
+		<div id="header">
+			<div class="container">
+					
+				<!-- Logo -->
+					<div id="logo">
+						<h1><a href="index.html">Perfect Burger</a></h1>
+						<span>Design by Kelvin Fong</span>
+					</div>
+				
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="indexL.html">Homepage</a></li>
+							<li class="active"><a href="favorite.html">My Favorite List</a></li>
+							<li><a href="index2L.html">Mini Burger</a></li>
+							<li><a href="index3L.html">Tasty Burger</a></li>
+							<li><a href="aboutL.html">About</a></li>
+						</ul>
+					</nav>
+
+			</div>
+		</div>
+	<!-- Header -->
+			
+	<!-- Main -->
+		<div id="main">
+			<div class="container">
+				<div class="row">
+
+					<!-- Content -->
+						<div id="content" class="12u skel-cell-important">
+							<section>
+								<header>
+									<h2>Perfect Burger</h2>
+									<span class="byline">My Favorite Burger</span>
+									<p id="list"><p>
+									<!--<a id="ara" class="button">Delete Item</a>-->
+								</header>
+								
+							</section>
+						</div>
+	
+					<!-- /Content -->
+						
+				</div>
+			
+			</div>
+		</div>
+	<!-- Main -->
+
+	<!-- Footer -->
+
+	<!-- Footer -->
+
+	<!-- Copyright -->
+		<div id="copyright">
+			<div class="container">
+				Copyright
+			</div>
+		</div>
+
+	</body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+		
+		var inputName = "";
+		var inputFavo = "";
+		var inputFavo2 = "";
+		var inputFavo3 = "";
+		
+		socket.on("login_OK", function(data) {
+			inputName = data.username;
+			inputFavo = data.favorite;
+			inputFavo2 = data.favorite2;
+			inputFavo3 = data.favorite3;
+			
+			var like = "Hello, " + inputName + "<br>like: " + inputFavo + "<button style='height:20;width:80px' onclick='removeF1()'>Remove</button><br>like: " + inputFavo2 + "<button style='height:20;width:80px' onclick='removeF2()'>Remove</button><br>like: " + inputFavo3 + "<button style='height:20;width:80px' onclick='removeF3()'>Remove</button>";
+			document.getElementById('list').innerHTML = like;
+		});
+		
+		function removeF1() {
+			var user = {};
+			user.do = "removeF1";
+			$.ajax( {
+				url: "http://localhost:5000/favorite.html",
+				type: "POST",
+				data: user,
+				success: function(data) {
+					console.log("favorite removed!", data);
+				}
+			});
+			return false;
+		}
+		
+		function removeF2() {
+			var user = {};
+			user.do = "removeF2";
+			$.ajax( {
+				url: "http://localhost:5000/favorite.html",
+				type: "POST",
+				data: user,
+				success: function(data) {
+					console.log("favorite removed!", data);
+				}
+			});
+			return false;
+		}
+		
+		function removeF3() {
+			var user = {};
+			user.do = "removeF3";
+			$.ajax( {
+				url: "http://localhost:5000/favorite.html",
+				type: "POST",
+				data: user,
+				success: function(data) {
+					console.log("favorite removed!", data);
+				}
+			});
+			return false;
+		}
+		
+	/*$(function () {
+		$("#ara").click(function(e) {
+			$(function() {
+				var user = {};
+				//user.favorite =  document.getElementById('p1').innerHTML;
+				user.do = "remove_item";
+				alert(inputName);
+				alert(inputPass);
+				$.ajax( {
+					url: "http://localhost:5000/signup.html",
+					type: "POST",
+					data: {username: inputName,password: inputPass, favorite: null},
+					success: function(data) {
+					console.log("favorite added!", data);
+				}
+				});
+				return false;
+			});
+		});
+	});*/
+		
+		
+	</script>
+</html>

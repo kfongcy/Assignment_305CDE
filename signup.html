@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Perfect Burger Login</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://www.google.com/fonts#UsePlace:use/Collection:Roboto:400,300,100,500'>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://www.google.com/fonts#UsePlace:use/Collection:Roboto+Slab:400,700,300,100'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+      <link rel="stylesheet" href="css/style2.css">
+
+  
+</head>
+
+<body>
+ <div id="successful_login" class="fix-middle">
+  <div class="container text-center">
+    <h1>Sorry, wrong username or password, please try again</h1>
+    <p><br><a href="signup.html" class="link dialog-reset">Return to login page</a></p>
+  </div>
+</div>
+<div id="successful_registration" class="fix-middle">
+  <div class="container text-center">
+    <h1>Welcome to the Perfect Burger!</h1>
+    <p>You've successfully register for an account.<br><a href="signup.html" class="link dialog-reset">Return to login page</a></p>
+  </div>
+</div>
+
+<div id="dialog" class="dialog dialog-effect-in">
+  <div class="dialog-front">
+    <div class="dialog-content">
+      <form id="login_form" class="dialog-form" action="" method="POST">
+        <fieldset>
+          <legend>Perfect Burger Log in</legend>
+          <div class="form-group">
+            <label for="user_username" class="control-label">Username:</label>
+            <input type="text" id="login_username" class="form-control" name="user_username" autofocus/>
+          </div>
+          <div class="form-group">
+            <label for="user_password" class="control-label">Password:</label>
+            <input type="password" id="login_password" class="form-control" name="user_password"/>
+          </div>
+          <div class="text-center pad-top-20">
+            <p><a href="index.html" class="link">Back to Homepage</a></p>
+          </div>
+		  <!--<div class="text-center pad-top-20">
+            <p><a href="indexL.html" class="link">Next</a></p>
+          </div>-->
+          <div class="pad-top-20 pad-btm-20">
+            <input id="login" type="submit" class="btn btn-default btn-block btn-lg" value="Continue">
+          </div>
+          <div class="text-center">
+            <p>Do you wish to register<br> for <a href="#" class="link user-actions"><strong>a new account</strong></a>?</p>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="dialog-back">
+    <div class="dialog-content">
+      <form id="register_form" class="dialog-form" action="" method="POST">
+        <fieldset>
+          <legend>Register</legend>
+          <div class="form-group">
+            <label for="user_username" class="control-label">Username:</label>
+            <input type="text" id="register_username" class="form-control" name="user_username"/> 
+          </div>
+          <div class="form-group">
+            <label for="user_password" class="control-label">Password:</label>
+            <input type="password" id="register_password" class="form-control" name="user_password"/>
+          </div>
+          <div class="form-group">
+            <label for="user_cnf_password" class="control-label">Confirm password:</label>
+            <input type="password" id="user_cnf_password" class="form-control" name="user_cnf_password"/>
+          </div>
+          <div class="form-group pad-top-20 form-group-checkbox">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="user_terms" name="user_terms">
+                I have read and I agree with the Terms and Conditions
+              </label>
+            </div>
+          </div>
+          <div class="pad-btm-20">
+            <input id="register" type="submit" class="btn btn-default btn-block btn-lg" value="Continue">
+          </div>
+          <div class="text-center">
+            <p>Return to <a href="#" class="link user-actions"><strong>log in page</strong></a>?</p>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io();
+	
+	socket.on("login_OK", function(data) {
+		console.log("login OK");
+		window.location = "indexL.html";
+	});
+	
+	socket.on("login_fail", function(data) {
+		//alert("login fail");
+	});
+
+	$(function () {
+		$("#login").click(function(e) {
+			$(function() {
+				var user = {};
+				user.username = $("#login_username").val();
+				user.password = $("#login_password").val();
+				$.ajax( {
+					url: "http://localhost:5000/signup.html",
+					type: "POST",
+					data: user
+				});
+				//alert(user.username + "; " + user.password);
+				return false;
+			});
+		});
+		$("#register").click(function(e) {
+			$(function() {
+				var user = {};
+				user.username = $("#register_username").val();
+				user.password = $("#register_password").val();
+				user.repassword = $("#user_cnf_password").val();
+				if (user.password != user.repassword) {
+					//alert("Error: password does not match with re-password. ");
+				} else {
+					$.ajax( {
+						url: "http://localhost:5000/signup.html",
+						type: "POST",
+						data: user
+					});
+					return false;
+				}
+			});
+		});
+	});
+	
+</script>
+</html>

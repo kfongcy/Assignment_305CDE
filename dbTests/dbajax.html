@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>mongoDB AJAX demo</title>
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+  <script type='text/javascript'>//<![CDATA[
+ $( document ).ready(function() { 
+    alert("ajax call html");
+ // $(function(){
+    $.ajax({
+      url: 'http://305db-idm4smb32469.codeanyapp.com:9000/db',
+      type: 'get',
+      dataType: 'text',
+      // mongod is expecting the parameter name to be called "jsonp"
+      success: function (data) {
+        alert(data);
+        console.log('success', data);
+        $('#datashow').html(data);
+      },
+      error: function (XMLHttpRequest, textStatus, errorThrown) {
+        console.log('error', errorThrown);
+      }
+    });
+  //});//]]>
+   
+ });
+  </script>
+</head>
+<body>
+  <div id="datashow"></div>
+  </div>
+</body>
+</html>
